@@ -1,18 +1,37 @@
 plugins {
-    id 'com.android.application'
+    id 'kotlin-android'
 }
 
+apply plugin: 'com.android.application'
+
 android {
-    compileSdk 31
+    compileSdkVersion 35
+    lintOptions {
+        warningsAsErrors  false
+        abortOnError false
+        disable 'MissingTranslation',
+                'ExtraTranslation',
+                'TypographyEllipsis',
+                'UnspecifiedImmutableFlag',
+                'UnusedResources',
+                'TypographyDashes'
+    }
+
+    buildFeatures {
+        viewBinding true
+        buildConfig true
+        compose false
+    }
 
     defaultConfig {
+        namespace "com.example.vcam"
         applicationId "com.example.vcam"
-        minSdk 21
-        targetSdk 26
-        versionCode 28
-        versionName "4.4"
+        minSdkVersion 21
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -21,14 +40,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
 }
 
 dependencies {
+//    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
     compileOnly 'de.robv.android.xposed:api:82'
     compileOnly 'de.robv.android.xposed:api:82:sources'
-    compile 'com.android.support:support-v4:25.4.0'
+    implementation 'com.android.support:support-v4:25.4.0'
 }
